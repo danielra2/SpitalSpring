@@ -4,10 +4,11 @@ import mycode.springspital.spital.models.Pediatrie;
 import mycode.springspital.spital.models.Spital;
 import mycode.springspital.spital.models.SpitalType;
 import mycode.springspital.spital.models.Stomatologie;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
 public class SpitalQuerryServiceImpl implements SpitalQuerryService{
     private List<Spital> spitalList;
 

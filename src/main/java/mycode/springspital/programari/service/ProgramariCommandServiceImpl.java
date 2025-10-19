@@ -1,4 +1,8 @@
 package mycode.springspital.programari.service;
 
-public class ProgramariCommandServiceImpl {
+import mycode.springspital.pacienti.service.PacientCommandService;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ProgramariCommandServiceImpl implements PacientCommandService {
 }
