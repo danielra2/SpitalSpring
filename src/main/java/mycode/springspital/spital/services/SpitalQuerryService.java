@@ -1,9 +1,10 @@
 package mycode.springspital.spital.services;
 
-import org.springframework.stereotype.Component;
 
+import mycode.springspital.spital.models.SpitalType;
 
 public interface SpitalQuerryService {
 
     void afisareSpitale();
+    void afisareSpitalDupaTip(SpitalType tip);
 }

@@ -45,6 +45,9 @@ public class View {
         System.out.println("1->Afisare programari");
         System.out.println("2->Afisare Spitale");
         System.out.println("3->Afisare pacienti");
+        System.out.println("4->Adauga programare");
+        System.out.println("5->Adauga pacient");
+        System.out.println("0->Exit");
     }
 
     public void play(){
@@ -62,8 +65,39 @@ public class View {
                 case 3:
                     pacientQuerryService.afisarePacienti();
                     break;
+                case 4:
+                    viewAdaugaProgramare();
+                    break;
+                case 5:
+                    viewAdaugaPacient();
+                    break;
+                case 0:
+                    isRunning=false;
+                    System.out.println("Aplicatia se inchide");
+                    break;
             }
         }
+
+    }
+    public void viewAdaugaProgramare(){
+        System.out.println("id-ul pacientului: ");
+        int pacient=scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Data programarii: ");
+        String data=scanner.nextLine();
+        programariCommandService.adaugaProgramare(pacient,data);
+    }
+
+    public void viewAdaugaPacient(){
+        System.out.println("Introduceti numele");
+        String nume= scanner.nextLine();
+        scanner.nextLine();
+        System.out.println("Introduceti varsta");
+        int varsta= scanner.nextInt();
+        pacientCommandService.adaugaPacient(nume,varsta);
+
+    }
+    public void viewAfisareSpitaleDupaTip(){
 
     }
 

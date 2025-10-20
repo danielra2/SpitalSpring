@@ -14,6 +14,7 @@ public class SpitalQuerryServiceImpl implements SpitalQuerryService{
 
     public SpitalQuerryServiceImpl(){
         this.spitalList=new ArrayList<>();
+        load();
     }
     public void load(){
         Pediatrie pediatrie= Pediatrie.builder().nume("Regina maria").anFondare(2001).spitalType(SpitalType.PEDIATRIE).varstaMaxima(11).build();
@@ -30,6 +31,22 @@ public class SpitalQuerryServiceImpl implements SpitalQuerryService{
     public void afisareSpitale() {
         for(Spital spital:spitalList){
             System.out.println(spital.getNume());
+        }
+
+    }
+
+    @Override
+    public void afisareSpitalDupaTip(SpitalType tip) {
+        System.out.println("Spitale de tip : "+ tip );
+        boolean found = false;
+        for(Spital spital:spitalList){
+            if(spital.getSpitalType()==tip){
+                System.out.println(spital);
+                found=true;
+            }
+        }
+        if(!found){
+            System.out.println("Nu au fost gasite spitale de tip: "+tip);
         }
 
     }
