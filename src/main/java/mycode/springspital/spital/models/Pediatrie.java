@@ -14,4 +14,10 @@ import org.springframework.stereotype.Component;
 public class Pediatrie extends Spital{
     private int varstaMaxima;
 
+    public Pediatrie(String text){
+        super(text);
+        String[]prop=text.split(",");
+        this.varstaMaxima=Integer.parseInt(prop[4]);
+    }
+
 }

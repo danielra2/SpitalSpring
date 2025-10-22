@@ -17,4 +17,11 @@ public class Stomatologie extends Spital {
     private int nrCabinete;
     private boolean areRadiografie;
 
+    public Stomatologie(String text){
+        super(text);
+        String[]prop=text.split(",");
+        this.nrCabinete=Integer.parseInt(prop[4]);
+        this.areRadiografie=Boolean.parseBoolean(prop[5]);
+    }
+
 }

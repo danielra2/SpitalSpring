@@ -1,5 +1,6 @@
 package mycode.springspital;
 
+import mycode.springspital.users.repository.UserRepositoryImpl;
 import mycode.springspital.view.View;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +17,8 @@ public class SpringSpitalApplication {
     CommandLineRunner show(View view){
         return args -> {
             view.play();
+
+
         };
 
 
