@@ -1,8 +1,10 @@
 package mycode.springspital.view;
 
+import mycode.springspital.medici.exceptions.MedicNotFoundException;
 import mycode.springspital.medici.models.Medici;
 import mycode.springspital.medici.service.MedicCommandService;
 import mycode.springspital.medici.service.MedicQuerryService;
+import mycode.springspital.pacienti.exceptions.PacientNotFoundException;
 import mycode.springspital.pacienti.models.Pacient;
 import mycode.springspital.pacienti.service.PacientCommandService;
 import mycode.springspital.pacienti.service.PacientQuerryService;
@@ -22,6 +24,7 @@ import mycode.springspital.users.service.UserQuerryService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -136,33 +139,42 @@ public class View {
 
     }
 
+//Explicatie: pacientul poate adauga programare doar daca acel pacient ar exista in baza de date. ca sa existe in baza de date trebuie sa se inregistreze(functionalitate complexa). avem pacientii hardocati
     public void viewAdaugaProgramare() {
-        System.out.println("id-ul pacientului: ");
-        int pacient = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.println("Numele medicului: "); // NOU: Citim numele
-        String numeMedic = scanner.nextLine();
-        Medici medic = medicQuerryService.getMedicByName(numeMedic);
-        if (medic == null) {
-            System.out.println("Eroare: Medicul cu numele '" + numeMedic + "'nu a fost gasit.");
-            return;
+        try {
+            System.out.println("Numele pacientului: ");
+            String nume = scanner.nextLine();
+           Pacient pacient=pacientQuerryService.getPacientByNume(nume);
+            System.out.println("Numele medicului: ");
+            String numeMedic = scanner.nextLine();
+            Medici medic = medicQuerryService.getMedicByName(numeMedic);
+            int idMedic = medic.getId();
+            int idPacient=pacient.getId();
+            System.out.println("Data programarii: ");
+            String data = scanner.nextLine();
+            programariCommandService.adaugaProgramare(idPacient, idMedic, data);
+            System.out.println("Programare adaugata cu succes la medicul " + numeMedic + ".");
+        } catch (InputMismatchException e) {
+            System.out.println("Eroare la citirea ID-ului: Va rugam introduceti un numar valid.");
+            scanner.nextLine();
+        } catch (MedicNotFoundException | PacientNotFoundException e) {
+           e.printStackTrace();
         }
-        int idMedic = medic.getId(); // Extrage ID-ul
-        System.out.println("Data programarii: ");
-        String data = scanner.nextLine();
-        programariCommandService.adaugaProgramare(pacient, idMedic, data);
-        System.out.println("Programare adaugata cu succes la medicul " + numeMedic + ".");
     }
-
     public void viewAdaugaPacient() {
         System.out.println("Introduceti numele");
         String nume = scanner.nextLine();
-        System.out.println("Introduceti varsta");
-        int varsta = scanner.nextInt();
-        pacientCommandService.adaugaPacient(nume, varsta);
-        System.out.println("Pacientul cu numele " + nume + " a fost adaugta cu succes");
-
+        int varsta = 0;
+        try {
+            System.out.println("Introduceti varsta");
+            varsta = scanner.nextInt();
+            scanner.nextLine();
+            pacientCommandService.adaugaPacient(nume, varsta);
+            System.out.println("Pacientul cu numele "+ nume +" a fost adaugata cu succes");
+        } catch (InputMismatchException e) {
+            System.out.println("Eroare la citirea varstei: Va rugam introduceti un numar valid.");
+            scanner.nextLine();
+        }
     }
 
     public void viewAfisareSpitaleDupaTip() {
@@ -220,25 +232,27 @@ public class View {
     public void viewProgramarileUnuiPacientInFunctieDeNume() {
         System.out.println("Introduceti numele pacientului:");
         String numePacient = scanner.nextLine();
-        Pacient pacient = pacientQuerryService.getPacientByNume(numePacient);
-        if (pacient == null) {
-            System.out.println("Eroare,pacientul nu a fost gasit");
-        }
-        int idPacient = pacient.getId();
-        List<Programari> programariList = programariQuerryService.getAllByProgramariByPacientId(idPacient);
-        System.out.println("Programarile pacientului: " + numePacient);
-        if (programariList.isEmpty()) {
-            System.out.println("Pacientul " + numePacient + " nu are programari");
-        } else {
-            for (Programari programare : programariList) {
-                Medici medic = medicQuerryService.findMediciById(programare.getIdMedic());
-                String numeMedic = (medic != null) ? medic.getNume() : "Medic Necunoscut";
-                System.out.printf("  [ID: %d] cu %s (ID Medic: %d) la data: %s\n",
-                        programare.getIdProgramare(),
-                        numeMedic,
-                        programare.getIdMedic(),
-                        programare.getDataProgramare());
+        try {
+
+
+            Pacient pacient = pacientQuerryService.getPacientByNume(numePacient);
+            if (pacient == null) {
+                System.out.println("Eroare,pacientul nu a fost gasit");
             }
+            int idPacient = pacient.getId();
+            List<Programari> programariList = programariQuerryService.getAllByProgramariByPacientId(idPacient);
+            System.out.println("Programarile pacientului: " + numePacient);
+            if (programariList.isEmpty()) {
+                System.out.println("Pacientul " + numePacient + " nu are programari");
+            } else {
+                for (Programari programare : programariList) {
+                    Medici medic = medicQuerryService.findMediciById(programare.getIdMedic());
+                    String numeMedic = (medic != null) ? medic.getNume() : "Medic Necunoscut";
+                    System.out.printf("[ID: %d] cu %s (ID Medic: %d) la data: %s\n", programare.getIdProgramare(), numeMedic, programare.getIdMedic(), programare.getDataProgramare());
+                }
+            }
+        }catch (PacientNotFoundException e){
+            e.printStackTrace();
         }
 
     }

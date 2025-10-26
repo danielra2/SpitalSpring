@@ -1,5 +1,6 @@
 package mycode.springspital.users.service;
 
+import mycode.springspital.users.exceptions.UserDoesnotExistException;
 import mycode.springspital.users.models.User;
 import mycode.springspital.users.models.Admin;
 import mycode.springspital.users.models.Client;
@@ -40,5 +41,12 @@ public class UserQuerryServiceImpl implements UserQuerryService {
                 System.out.println("USER " + user);
             }
         }
+    }
+
+    //explicatie: daca arunca exceptia userul nu este inregistrat(trebuie implementata functionalitatea de register)
+    @Override
+    public User getUserByUserName(String name) throws UserDoesnotExistException {
+        List<User>userList=userRepositoryImpl.getAllUsers();
+        return userList.stream().filter(user ->user.getUsername().equalsIgnoreCase(name) ).findFirst().orElseThrow(UserDoesnotExistException::new);
     }
 }

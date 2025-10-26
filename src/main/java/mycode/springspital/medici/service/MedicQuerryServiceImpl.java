@@ -1,5 +1,6 @@
 package mycode.springspital.medici.service;
 
+import mycode.springspital.medici.exceptions.MedicNotFoundException;
 import mycode.springspital.medici.models.Medici;
 import mycode.springspital.medici.repository.MediciRepository;
 import mycode.springspital.medici.repository.MediciRepositoryImpl;
@@ -16,20 +17,20 @@ public class MedicQuerryServiceImpl implements MedicQuerryService{
     }
 
     @Override
-    public Medici getMedicByName(String name) {
+    public Medici getMedicByName(String name) throws MedicNotFoundException {
         List<Medici> mediciList=mediciRepository.getAllMedici();
         for(int i=0;i<mediciList.size();i++){
             if(mediciList.get(i).getNume().equalsIgnoreCase(name)){
                 return mediciList.get(i);
             }
         }
-        return null;
+        throw new MedicNotFoundException();
     }
 
     @Override
-    public Medici findMediciById(int id) {
+    public Medici findMediciById(int id) throws MedicNotFoundException {
         List<Medici>mediciList=mediciRepository.getAllMedici();
-        return mediciList.stream().filter(medici -> medici.getId()==id).findFirst().orElse(null);
+        return mediciList.stream().filter(medici -> medici.getId()==id).findFirst().orElseThrow(MedicNotFoundException::new);
     }
 
 }

@@ -1,5 +1,6 @@
 package mycode.springspital.pacienti.service;
 
+import mycode.springspital.pacienti.exceptions.PacientNotFoundException;
 import mycode.springspital.pacienti.models.Pacient;
 import mycode.springspital.pacienti.repository.PacientiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +27,15 @@ public class PacientQuerryServiceImpl implements PacientQuerryService{
     }
 
     @Override
-    public Pacient getPacientById(int id) {
+    public Pacient getPacientById(int id) throws PacientNotFoundException {
         List<Pacient>pacientList=pacientiRepository.getAllPacient();
-        return pacientList.stream().filter(pacient -> pacient.getId()==id).findFirst().orElse(null);
+        return pacientList.stream().filter(pacient -> pacient.getId()==id).findFirst().orElseThrow(PacientNotFoundException::new);
     }
 
     @Override
-    public Pacient getPacientByNume(String nume) {
+    public Pacient getPacientByNume(String nume) throws PacientNotFoundException {
         List<Pacient>pacientList=pacientiRepository.getAllPacient();
-        return pacientList.stream().filter(pacient -> pacient.getNume().equalsIgnoreCase(nume)).findFirst().orElse(null);
+        return pacientList.stream().filter(pacient -> pacient.getNume().equalsIgnoreCase(nume)).findFirst().orElseThrow(PacientNotFoundException::new);
     }
 
 

@@ -1,2 +1,2 @@
 CLIENT,1,daniel,electricienilor
-ADMIN,2,robert,ceferistilor
+ADMIN,2,adrian,ceferistilor
