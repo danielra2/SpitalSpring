@@ -8,4 +8,5 @@ public interface MediciRepository {
     void load();
     List<Medici> getAllMedici();
 
+
 }

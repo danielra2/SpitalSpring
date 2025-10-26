@@ -25,4 +25,11 @@ public class MedicQuerryServiceImpl implements MedicQuerryService{
         }
         return null;
     }
+
+    @Override
+    public Medici findMediciById(int id) {
+        List<Medici>mediciList=mediciRepository.getAllMedici();
+        return mediciList.stream().filter(medici -> medici.getId()==id).findFirst().orElse(null);
+    }
+
 }

@@ -10,4 +10,5 @@ public interface PacientiRepository {
      void load();
      List<Pacient> getAllPacient();
     Pacient save(Pacient pacient);
+
 }

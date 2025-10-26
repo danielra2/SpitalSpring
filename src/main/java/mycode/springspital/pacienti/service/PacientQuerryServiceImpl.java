@@ -24,4 +24,18 @@ public class PacientQuerryServiceImpl implements PacientQuerryService{
         }
 
     }
+
+    @Override
+    public Pacient getPacientById(int id) {
+        List<Pacient>pacientList=pacientiRepository.getAllPacient();
+        return pacientList.stream().filter(pacient -> pacient.getId()==id).findFirst().orElse(null);
+    }
+
+    @Override
+    public Pacient getPacientByNume(String nume) {
+        List<Pacient>pacientList=pacientiRepository.getAllPacient();
+        return pacientList.stream().filter(pacient -> pacient.getNume().equalsIgnoreCase(nume)).findFirst().orElse(null);
+    }
+
+
 }

@@ -4,4 +4,5 @@ import mycode.springspital.medici.models.Medici;
 
 public interface MedicQuerryService {
     Medici getMedicByName(String name);
+    Medici findMediciById(int id);
 }

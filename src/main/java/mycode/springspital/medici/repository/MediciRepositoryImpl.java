@@ -42,4 +42,5 @@ public class MediciRepositoryImpl implements MediciRepository {
     public List<Medici> getAllMedici() {
         return mediciList;
     }
+
 }
