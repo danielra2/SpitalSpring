@@ -14,14 +14,15 @@ public class SpringSpitalApplication {
         SpringApplication.run(SpringSpitalApplication.class, args);
     }
     @Bean
-    CommandLineRunner show(View view){
+    CommandLineRunner show(){
         return args -> {
-            view.play();
+            System.out.println("CommandLineRunner started!");
+            try {
 
-
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         };
-
-
     }
 
 

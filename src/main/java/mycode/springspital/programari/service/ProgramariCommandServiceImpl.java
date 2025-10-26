@@ -19,8 +19,8 @@ public class ProgramariCommandServiceImpl implements ProgramariCommandService {
     }
 
     @Override
-    public void adaugaProgramare(int idPacient, String dataProgramare) {
-        Programari programari=Programari.builder().idPacient(idPacient).dataProgramare(dataProgramare).build();
+    public void adaugaProgramare(int idPacient,int idMedic, String dataProgramare) {
+        Programari programari=Programari.builder().idPacient(idPacient).idMedic(idMedic).dataProgramare(dataProgramare).build();
         programariRepository.save(programari);
 
 

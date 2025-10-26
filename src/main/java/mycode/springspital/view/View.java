@@ -1,5 +1,8 @@
 package mycode.springspital.view;
 
+import mycode.springspital.medici.models.Medici;
+import mycode.springspital.medici.service.MedicCommandService;
+import mycode.springspital.medici.service.MedicQuerryService;
 import mycode.springspital.pacienti.service.PacientCommandService;
 import mycode.springspital.pacienti.service.PacientQuerryService;
 import mycode.springspital.programari.service.ProgramariCommandService;
@@ -33,12 +36,15 @@ public class View {
     private UserCommandService userCommandService;
     private UserQuerryService userQuerryService;
 
+    private MedicQuerryService medicQuerryService;
+    private MedicCommandService medicCommandService;
+
     private UserRepositoryImpl userRepositoryImpl;
 
     private Scanner scanner;
 
 
-    public View(SpitalCommandService spitalCommandService,SpitalQuerryService spitalQuerryService,PacientCommandService pacientCommandService,PacientQuerryService pacientQuerryService,ProgramariCommandService programariCommandService,ProgramariQuerryService programariQuerryService,UserCommandService userCommandService,UserQuerryService userQuerryService,UserRepositoryImpl userRepositoryImpl){
+    public View(SpitalCommandService spitalCommandService,SpitalQuerryService spitalQuerryService,PacientCommandService pacientCommandService,PacientQuerryService pacientQuerryService,ProgramariCommandService programariCommandService,ProgramariQuerryService programariQuerryService,UserCommandService userCommandService,UserQuerryService userQuerryService,UserRepositoryImpl userRepositoryImpl,MedicQuerryService medicQuerryService,MedicCommandService medicCommandService){
 
 
 
@@ -56,7 +62,12 @@ public class View {
 
         this.userRepositoryImpl=userRepositoryImpl;
 
+        this.medicQuerryService=medicQuerryService;
+        this.medicCommandService=medicCommandService;
+
         this.scanner=new Scanner(System.in);
+
+        this.play();
 
 
     }
@@ -121,18 +132,28 @@ public class View {
         System.out.println("id-ul pacientului: ");
         int pacient=scanner.nextInt();
         scanner.nextLine();
+
+        System.out.println("Numele medicului: "); // NOU: Citim numele
+        String numeMedic=scanner.nextLine();
+        Medici medic = medicQuerryService.getMedicByName(numeMedic);
+        if(medic == null){
+            System.out.println("Eroare: Medicul cu numele '"+numeMedic +"'nu a fost gasit.");
+            return;
+        }
+        int idMedic = medic.getId(); // Extrage ID-ul
         System.out.println("Data programarii: ");
         String data=scanner.nextLine();
-        programariCommandService.adaugaProgramare(pacient,data);
+        programariCommandService.adaugaProgramare(pacient, idMedic, data);
+        System.out.println("Programare adaugata cu succes la medicul " + numeMedic + ".");
     }
 
     public void viewAdaugaPacient(){
         System.out.println("Introduceti numele");
         String nume= scanner.nextLine();
-        scanner.nextLine();
         System.out.println("Introduceti varsta");
         int varsta= scanner.nextInt();
         pacientCommandService.adaugaPacient(nume,varsta);
+        System.out.println("Pacientul cu numele "+nume +" a fost adaugta cu succes");
 
     }
     public void viewAfisareSpitaleDupaTip(){

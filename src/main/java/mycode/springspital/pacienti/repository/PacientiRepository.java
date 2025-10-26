@@ -5,7 +5,7 @@ import mycode.springspital.users.models.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-@Component
+
 public interface PacientiRepository {
      void load();
      List<Pacient> getAllPacient();

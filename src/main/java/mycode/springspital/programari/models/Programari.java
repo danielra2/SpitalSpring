@@ -14,12 +14,15 @@ public class Programari {
     private int idProgramare;
     private int idPacient;
     private String dataProgramare;
+    private int idMedic;
 
     public Programari(String text){
         String[]prop=text.split(",");
         this.idProgramare=Integer.parseInt(prop[0]);
         this.idPacient=Integer.parseInt(prop[1]);
-        this.dataProgramare=prop[2];
+        this.idMedic=Integer.parseInt(prop[2]);
+        this.dataProgramare=prop[3];
+
 
     }
 

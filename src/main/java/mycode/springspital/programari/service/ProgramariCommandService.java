@@ -5,5 +5,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface ProgramariCommandService {
-    void adaugaProgramare(int idPacient, String dataProgramare);
+    void adaugaProgramare(int idPacient,int idMedic, String dataProgramare);
 }

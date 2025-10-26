@@ -72,4 +72,20 @@ public class UserRepositoryImpl implements UserRepository{
         this.userList.add(user);
         return user;
     }
+
+    @Override
+    public User findUserById(int id) {
+        for(User user:userList){
+            if(user.getId()==id){
+                return user;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteUserById(int id) {
+        userList.removeIf(user -> user.getId()==id);
+
+    }
 }

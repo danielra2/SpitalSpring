@@ -5,13 +5,9 @@ import mycode.springspital.users.models.Admin;
 import mycode.springspital.users.models.Client;
 import mycode.springspital.users.models.User;
 import mycode.springspital.users.repository.UserRepository;
-import mycode.springspital.users.repository.UserRepositoryImpl;
-import mycode.springspital.users.service.UserCommandService;
+
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Component
@@ -26,7 +22,7 @@ public class UserCommandServiceImpl implements UserCommandService {
 
 
     @Override
-    public void adaugaAdmin(String username, String emailContact) throws UserNameAlreadyExistsException {
+    public Admin adaugaAdmin(String username, String emailContact) throws UserNameAlreadyExistsException {
         User user=userRepository.findUserByName(username);
         if(user!=null){
             throw new UserNameAlreadyExistsException();
@@ -35,11 +31,11 @@ public class UserCommandServiceImpl implements UserCommandService {
                 .username(username)
                 .emailContact(emailContact)
                 .build();
-        userRepository.save(adminNou);
+       return (Admin) userRepository.save(adminNou);
     }
 
     @Override
-    public void adaugaClient(String username, String adresa) {
+    public Client adaugaClient(String username, String adresa) {
 
         for (User existingUser : userRepository.getAllUsers()) {
             if (existingUser.getUsername().equalsIgnoreCase(username)) {
@@ -50,8 +46,31 @@ public class UserCommandServiceImpl implements UserCommandService {
                 .username(username)
                 .adresa(adresa)
                 .build();
-        userRepository.save(clientNou);
+         return (Client) userRepository.save(clientNou);
     }
+
+    @Override
+    public Admin stergeAdmin(int id) {
+        User user=userRepository.findUserById(id);
+        if(user!=null&&user instanceof Admin){
+            userRepository.deleteUserById(id);
+            return (Admin) user;
+        }
+        return null;
+
+
+    }
+
+    @Override
+    public Client stergeClient(int id) {
+        User user=userRepository.findUserById(id);
+        if(user!=null&&user instanceof Client){
+            userRepository.deleteUserById(id);
+            return (Client) user;
+        }
+        return null;
+    }
+
 
     //todo:implement adaugare de user
 
