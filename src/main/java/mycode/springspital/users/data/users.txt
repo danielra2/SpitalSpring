@@ -1,2 +1,4 @@
 CLIENT,1,daniel,electricienilor
 ADMIN,2,adrian,ceferistilor
+CLIENT,3,ionut,semaforului
+ADMIN,4,costel,@admin.ro

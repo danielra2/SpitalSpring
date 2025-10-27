@@ -1,5 +1,7 @@
 package mycode.springspital.programari.service;
 
+import mycode.springspital.medici.exceptions.MedicNotFoundException;
+import mycode.springspital.programari.exceptions.MedicIdDoesntExist;
 import mycode.springspital.programari.models.Programari;
 import mycode.springspital.programari.repository.ProgramariRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,4 +38,21 @@ public class ProgramariQuerryServiceImpl implements ProgramariQuerryService {
         }
         return programarilePacientului;
     }
+
+    @Override
+    public List<Integer> toateIdurilePacientilorCareAuUnAnumitMedicIdInProgramareaLor(int id) throws MedicNotFoundException {
+        List<Integer>IntegerList=new ArrayList<>();
+        List<Programari>programariList=programariRepository.getAllProgramari();
+        for(Programari programare:programariList){
+            if(programare.getIdMedic()==id){
+                IntegerList.add(programare.getIdPacient());
+            }
+        }
+        if(IntegerList==null){
+            throw new MedicNotFoundException();
+        }
+        return IntegerList;
+    }
+
+
 }

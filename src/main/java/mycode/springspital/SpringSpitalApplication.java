@@ -1,7 +1,6 @@
 package mycode.springspital;
 
-import mycode.springspital.users.repository.UserRepositoryImpl;
-import mycode.springspital.view.View;
+import mycode.springspital.view.LoginView;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,14 +13,10 @@ public class SpringSpitalApplication {
         SpringApplication.run(SpringSpitalApplication.class, args);
     }
     @Bean
-    CommandLineRunner show(){
+    CommandLineRunner show(LoginView loginView){
         return args -> {
-            System.out.println("CommandLineRunner started!");
-            try {
+            loginView.play();
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         };
     }
 

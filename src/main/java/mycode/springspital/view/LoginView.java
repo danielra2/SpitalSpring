@@ -1,6 +1,7 @@
 package mycode.springspital.view;
 
 import mycode.springspital.users.exceptions.UserDoesnotExistException;
+import mycode.springspital.users.models.Admin;
 import mycode.springspital.users.models.Client;
 import mycode.springspital.users.models.User;
 import mycode.springspital.users.service.UserCommandService;
@@ -15,11 +16,17 @@ public class LoginView implements ViewInterface{
     private UserCommandService userCommandService;
     private Scanner scanner;
     protected User user;
-    private View view;
+    private ClientView clientView;
+    private AdminView adminView;
 
-    public LoginView(UserQuerryService userQuerryService,UserCommandService userCommandService){
+    public LoginView(UserQuerryService userQuerryService,UserCommandService userCommandService,ClientView clientView,AdminView adminView){
+
         this.userCommandService=userCommandService;
         this.userQuerryService=userQuerryService;
+        this.userQuerryService=userQuerryService;
+        this.userCommandService=userCommandService;
+        this.clientView=clientView;
+        this.adminView=adminView;
         scanner=new Scanner(System.in);
     }
 
@@ -32,11 +39,12 @@ public class LoginView implements ViewInterface{
             System.out.println("Bun venit, "+nume);
 
             if(user instanceof Client){
-                view=new ClientView();
-
+                clientView.setCurrentUser((Client) user);
+                clientView.play();
             }
-
-
+            else if(user instanceof Admin){
+                adminView.play();
+            }
         }catch (UserDoesnotExistException e){
             e.printStackTrace();
         }
@@ -50,6 +58,7 @@ public class LoginView implements ViewInterface{
         while (merge){
             this.menu();
             int choice= scanner.nextInt();
+            scanner.nextLine();
             switch (choice){
                 case 1:
                     login();

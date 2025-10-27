@@ -10,4 +10,5 @@ import java.util.List;
 public interface ProgramariQuerryService {
     void afisareProramari();
     List<Programari> getAllByProgramariByPacientId(int id);
+    public List<Integer>toateIdurilePacientilorCareAuUnAnumitMedicIdInProgramareaLor(int id);
 }

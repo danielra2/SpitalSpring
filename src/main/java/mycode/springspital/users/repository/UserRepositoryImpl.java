@@ -39,7 +39,6 @@ public class UserRepositoryImpl implements UserRepository{
                 String line=scanner.nextLine();
                 String[]parti=line.split(",");
                 UserTypes tip= UserTypes.valueOf(parti[0]);
-                // Presupunem ca exista User.fabricaUser in clasa User
                 User user= User.fabricaUser(tip,line);
                 if(user!=null){
                     this.userList.add(user);

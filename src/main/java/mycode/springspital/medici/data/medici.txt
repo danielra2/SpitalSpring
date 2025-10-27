@@ -1,5 +1,5 @@
-1,Dr. Popescu Ana,PEDIATRIE
-2,Dr. Ionescu Mihai,STOMATOLOGIE
-3,Dr. Vasilescu Elena,PEDIATRIE
-4,Dr. Georgescu Dan,STOMATOLOGIE
-5,Dr. Ciobanu Maria,PEDIATRIE
+1,Popescu Ana,PEDIATRIE
+2,Ionescu Mihai,STOMATOLOGIE
+3,Vasilescu Elena,PEDIATRIE
+4,Georgescu Dan,STOMATOLOGIE
+5,Ciobanu Maria,PEDIATRIE
